@@ -216,7 +216,10 @@ class Multisites {
 		}
 
 		if($id = Session::get('Multisites_ActiveSite')) {
-			return Site::get()->byID($id);
+			$site = Site::get()->byID($id);
+			if ($site && $site->exists()) {
+				return $site;
+			}
 		}
 
 		// if($id = Session::get('MultisitesModelAdmin_SiteID')) { // legacy
