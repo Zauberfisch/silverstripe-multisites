@@ -179,7 +179,7 @@ class Multisites {
 	 */
 	public function getActiveSite(){
 		$controller = Controller::curr();
-		if($controller->class == 'CMSPageEditController'){
+		if($controller->class == 'CMSPageEditController') {
 
 			// requests to admin/pages/edit/EditorToolbar/viewfile?ID=XX 
 			// are not reliable because $controller->currentPage()
@@ -193,7 +193,7 @@ class Multisites {
 					return Site::get()->first();
 				}
 
-				if($page instanceof Site){	
+				if($page instanceof Site) {
 					$this->setActiveSite($page);
 					return $page;
 				}
@@ -216,7 +216,10 @@ class Multisites {
 		}
 
 		if($id = Session::get('Multisites_ActiveSite')) {
-			return Site::get()->byID($id);
+			$site = Site::get()->byID($id);
+			if ($site && $site->exists()) {
+				return $site;
+			}
 		}
 
 		// if($id = Session::get('MultisitesModelAdmin_SiteID')) { // legacy
